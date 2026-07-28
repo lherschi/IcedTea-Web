@@ -23,6 +23,7 @@ if WINDOWS
 	export TOP_SRC_DIR := $(shell cygpath -p -m "$(abs_top_srcdir)")
 	export prefix := $(shell cygpath -p -m "$(prefix)")
 	export CPA="-v"
+	RUSTFLAGS="-C link-arg=-ladvapi32"
 else
 	export TOP_BUILD_DIR = $(abs_top_builddir)
 	export TOP_SRC_DIR = $(abs_top_srcdir)
@@ -547,8 +548,8 @@ $(WIN_INSTALLER_DIR)/itw-installer.json: clean-win-installer
 
 win-installer: win-only-image $(WIN_INSTALLER_DIR)/itw-installer.json
 	"$(JAVA)" -jar "$(WIXGEN_JAR)" "$(DESTDIR)$(prefix)" -c $(WIN_INSTALLER_DIR)/itw-installer.json -o $(WIN_INSTALLER_DIR)/itw-installer.wxs
-	cd $(WIN_INSTALLER_DIR) && "$(WIX_TOOLSET_DIR)"/candle.exe /nologo itw-installer.wxs
-	cd $(WIN_INSTALLER_DIR) && "$(WIX_TOOLSET_DIR)"/light.exe /nologo -sval -ext WixUIExtension itw-installer.wixobj
+	cd $(WIN_INSTALLER_DIR) && "$(WIX_TOOLSET_DIR)"/candle.exe -nologo itw-installer.wxs
+	cd $(WIN_INSTALLER_DIR) && "$(WIX_TOOLSET_DIR)"/light.exe -nologo -sval -ext WixUIExtension itw-installer.wixobj
 	cd $(WIN_INSTALLER_DIR) && mv itw-installer.msi $(distdir).msi
 endif
 
@@ -1013,6 +1014,7 @@ launcher.build/$(javaws) launcher.build/$(itweb_settings) launcher.build/$(polic
 	  export RHINO_JAR=$(RHINO_JAR) ; \
 	  export MSLINKS_JAR=$(MSLINKS_JAR) ; \
 	  export MODULARJDK_ARGS_LOCATION=$(MODULARJDK_ARGS_LOCATION) ; \
+	  export RUSTFLAGS=${RUSTFLAGS} ; \
 	  unset MAIN_CLASS ; \
 	  unset BIN_LOCATION ; \
 	  unset PROGRAM_NAME ; \
@@ -1441,7 +1443,7 @@ netx-dist-tests-remove-cert-from-public:
 	keystoredir=`dirname $$PUBLIC_KEYSTORE`; \
 	[ ! -d $$keystoredir ] && mkdir -p $$keystoredir; \
 	for which in "$${types[@]}" ; do \
-	  $(SYSTEM_JDK_DIR)/bin/keytool -delete -alias $(TEST_CERT_ALIAS)_$$which -keystore $$PUBLIC_KEYSTORE -storepass $(PUBLIC_KEYSTORE_PASS) ; \
+	  $(SYSTEM_JDK_DIR)/bin/keytool -delete -alias $(TEST_CERT_ALIAS)_$$which -keystore $$PUBLIC_KEYSTORE -storepass $(PUBLIC_KEYSTORE_PASS); true; \
 	done ;
 	-rm -rf stamps/netx-dist-tests-import-cert-to-public
 
