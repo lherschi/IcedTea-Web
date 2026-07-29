@@ -38,9 +38,6 @@ function build() {
         rm -fv $BUILD_DIR/target/debug/launcher-*.d ;
         $KCOV $BUILD_DIR $BUILD_DIR/target/debug/launcher-*
       else    
-        if isWindows; then
-          export RUSTFLAGS="-C link-arg=-ladvapi32"
-        fi
         #on linux patch  out deps?
         RUST_BACKTRACE=1 cargo test
         #some windows?
