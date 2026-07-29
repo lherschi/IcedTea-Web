@@ -23,7 +23,6 @@ if WINDOWS
 	export TOP_SRC_DIR := $(shell cygpath -p -m "$(abs_top_srcdir)")
 	export prefix := $(shell cygpath -p -m "$(prefix)")
 	export CPA="-v"
-	RUSTFLAGS="-C link-arg=-ladvapi32"
 else
 	export TOP_BUILD_DIR = $(abs_top_builddir)
 	export TOP_SRC_DIR = $(abs_top_srcdir)
@@ -1014,7 +1013,6 @@ launcher.build/$(javaws) launcher.build/$(itweb_settings) launcher.build/$(polic
 	  export RHINO_JAR=$(RHINO_JAR) ; \
 	  export MSLINKS_JAR=$(MSLINKS_JAR) ; \
 	  export MODULARJDK_ARGS_LOCATION=$(MODULARJDK_ARGS_LOCATION) ; \
-	  export RUSTFLAGS=${RUSTFLAGS} ; \
 	  unset MAIN_CLASS ; \
 	  unset BIN_LOCATION ; \
 	  unset PROGRAM_NAME ; \
