@@ -37,7 +37,7 @@ function build() {
         cargo test  --no-run
         rm -fv $BUILD_DIR/target/debug/launcher-*.d ;
         $KCOV $BUILD_DIR $BUILD_DIR/target/debug/launcher-*
-      else    
+      else
         #on linux patch  out deps?
         RUST_BACKTRACE=1 cargo test
         #some windows?
