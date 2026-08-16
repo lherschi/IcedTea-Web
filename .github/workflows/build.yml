@@ -51,7 +51,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yum -y install autoconf bind-utils bzip2 elfutils-libelf-devel gcc gcc-c++ glibc-devel \
+          yum -y install autoconf bc bind-utils bzip2 elfutils-libelf-devel gcc gcc-c++ glibc-devel \
           gmp-devel java-1.8.0-openjdk-devel libcurl-devel make mpfr-devel perl unzip which zip
           curl -o tagsoup.jar "https://repo1.maven.org/maven2/org/ccil/cowan/tagsoup/tagsoup/1.2.1/tagsoup-1.2.1.jar"
           sha256sum tagsoup.jar | awk '$1!="ac97f7b4b1d8e9337edfa0e34044f8d0efe7223f6ad8f3a85d54cc1018ea2e04"{exit 1}'
@@ -167,7 +167,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          yum -y install autoconf bind-utils bzip2 elfutils-libelf-devel gcc gcc-c++ glibc-devel \
+          yum -y install autoconf bc bind-utils bzip2 elfutils-libelf-devel gcc gcc-c++ glibc-devel \
           gmp-devel java-1.8.0-openjdk-devel libcurl-devel make mpfr-devel perl unzip which zip
           curl -o tagsoup.jar "https://repo1.maven.org/maven2/org/ccil/cowan/tagsoup/tagsoup/1.2.1/tagsoup-1.2.1.jar"
           sha256sum tagsoup.jar | awk '$1!="ac97f7b4b1d8e9337edfa0e34044f8d0efe7223f6ad8f3a85d54cc1018ea2e04"{exit 1}'
@@ -364,7 +364,7 @@ jobs:
       - name: Check Cygwin sig
         run: |
           gpg --keyid-format=long --with-fingerprint --verify 'C:\temp\cygwin.exe.sig' 'C:\temp\cygwin.exe'
-          Start-Process -Wait -FilePath 'C:\temp\cygwin.exe' -ArgumentList '--packages autoconf,automake,cpio,curl,gcc,git,gnupg,grep,libtool,make,mingw64-x86_64-gcc-core,perl,pkg-config,unzip,wget,zip --quiet-mode --download --local-install --delete-orphans --site https://mirrors.kernel.org/sourceware/cygwin/ --local-package-dir C:\cygwin_packages --root C:\cygwin64'
+          Start-Process -Wait -FilePath 'C:\temp\cygwin.exe' -ArgumentList '--packages autoconf,automake,bc,cpio,curl,gcc,git,gnupg,grep,libtool,make,mingw64-x86_64-gcc-core,perl,pkg-config,unzip,wget,zip --quiet-mode --download --local-install --delete-orphans --site https://mirrors.kernel.org/sourceware/cygwin/ --local-package-dir C:\cygwin_packages --root C:\cygwin64'
 
       - name: Set PATH
         run: echo "C:\cygwin64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
